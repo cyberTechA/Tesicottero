@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  flight_stack:
+    build:
+      context: .
+      dockerfile: Dockerfile.flightcontroller
+    container_name: inav_flight_controller
+    ports:
+      - "5760-5769:5760-5769"
+
+  gps_stack:
+    build:
+      context: .
+      dockerfile: Dockerfile.gps
+    container_name: inav_gps
+
+volumes:
+  logs:
+  config:

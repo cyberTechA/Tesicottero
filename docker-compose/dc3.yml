@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  flight_stack:
+    image: 19186464848/tesicottero:v1
+    container_name: inav_flight_controller
+    ports:
+      - "5760-5769:5760-5769"
+
+  gps_stack:
+    image: 19186464848/tesicottero:v1
+    container_name: inav_gps
+
+volumes:
+  logs:
+  config:

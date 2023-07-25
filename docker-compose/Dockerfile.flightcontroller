@@ -1,0 +1,36 @@
+# Use the official Ubuntu image as the base image
+FROM ubuntu:22.04
+
+# Install necessary packages and dependencies
+RUN apt update && apt install -y \
+    git \
+    build-essential \
+    ninja-build \
+    cmake \
+    ruby \
+    file
+
+# Set the working directory to /root
+WORKDIR /root
+
+# Copy INAV Configurator and inav-6.1.1 files to the image
+COPY INAV-Configurator_linux64_6.1.0.tar.gz inav-6.1.1.tar.gz /root/
+
+# Extract and rename INAV Configurator
+RUN tar -xvzf INAV-Configurator_linux64_6.1.0.tar.gz 
+#cd INAV\ Configurator/ && \
+#mkdir -p build_SITL && \
+#cd build_SITL && \
+#cmake -DSITL=ON -DWARNINGS_AS_ERRORS=ON -G Ninja .. && \
+# ninja
+
+# Extract and build inav-6.1.1
+RUN tar -xvzf inav-6.1.1.tar.gz && \
+    cd inav-6.1.1 && \
+    mkdir -p build_SITL && \
+    cd build_SITL && \
+    cmake -DSITL=ON -DWARNINGS_AS_ERRORS=ON -G Ninja .. && \
+    ninja
+
+
+CMD ["/bin/bash"]
